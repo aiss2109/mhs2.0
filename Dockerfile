@@ -37,9 +37,6 @@ RUN echo "/ngrok tcp 22 --authtoken ${NGROK_TOKEN} --region ${REGION} &" > /star
 # Setup QEMU / noVNC environment
 RUN mkdir -p /etc/qemu && echo "allow br0" > /etc/qemu/bridge.conf
 
-# Copy custom scripts
-COPY --chmod=755 ./src /run/
-
 # Volume e porte
 EXPOSE 22 5900 8006 4040
 
