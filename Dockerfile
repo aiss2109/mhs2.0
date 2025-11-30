@@ -57,7 +57,6 @@ COPY --chmod=664 ./web/conf/mandatory.json /usr/share/novnc
 COPY --chmod=755 ./src /run/
 
 # Volume e porte
-VOLUME /storage
 EXPOSE 22 5900 8006 4040
 
 ENV BOOT="alpine"
