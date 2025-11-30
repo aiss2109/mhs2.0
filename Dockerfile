@@ -37,22 +37,6 @@ RUN echo "/ngrok tcp 22 --authtoken ${NGROK_TOKEN} --region ${REGION} &" > /star
 # Setup QEMU / noVNC environment
 RUN mkdir -p /etc/qemu && echo "allow br0" > /etc/qemu/bridge.conf
 
-# Download noVNC
-RUN wget "https://github.com/novnc/noVNC/archive/refs/tags/v${VERSION_VNC}.tar.gz" -O /tmp/novnc.tar.gz \
-    && tar -xf /tmp/novnc.tar.gz -C /tmp/ \
-    && mv /tmp/noVNC-${VERSION_VNC} /usr/share/novnc
-
-# Setup nginx
-RUN unlink /etc/nginx/sites-enabled/default && \
-    sed -i 's/^worker_processes.*/worker_processes 1;/' /etc/nginx/nginx.conf && \
-    # Copia i file di configurazione personalizzati se disponibili
-    # COPY ./web/conf/nginx.conf /etc/nginx/default.conf
-
-# Copy web files
-COPY --chmod=755 ./web /var/www/
-COPY --chmod=664 ./web/conf/defaults.json /usr/share/novnc
-COPY --chmod=664 ./web/conf/mandatory.json /usr/share/novnc
-
 # Copy custom scripts
 COPY --chmod=755 ./src /run/
 
